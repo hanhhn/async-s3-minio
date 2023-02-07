@@ -1,4 +1,4 @@
-FROM docker.io/ubuntu:latest as builder
+FROM docker.io/ubuntu:20.04 as builder
 
 RUN apt-get update && apt-get install -y curl unzip wget
 
@@ -10,9 +10,6 @@ RUN curl 'https://dl.min.io/client/mc/release/linux-arm64/mc' --create-dirs -o ~
 RUN chmod +x $HOME/minio-binaries/mc
 RUN export PATH=$PATH:$HOME/minio-binaries/ && mc --version
 
-COPY config.json /root/.mc/config.json
-COPY credentials /root/.aws/credentials
-COPY config /root/.aws/config
 COPY sync-data.sh .
 RUN chmod +x /sync-data.sh
 ENV HOST 0.0.0.0
